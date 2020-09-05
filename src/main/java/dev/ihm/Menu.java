@@ -7,10 +7,13 @@ import dev.ihm.options.OptionListerPlats;
 import dev.ihm.options.OptionTerminer;
 import dev.service.IPlatService;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -27,6 +30,21 @@ public class Menu {
         actions.put(99, new OptionTerminer());
         this.scanner = scanner;
     }
+    
+    @Autowired
+    public Menu(Scanner scanner, IPlatService service, List<IOptionMenu> optionMenus) {
+
+        optionMenus.sort(Comparator.comparing(IOptionMenu::getPoids));
+
+        int index = 1;
+        for (IOptionMenu optionMenu: optionMenus) {
+            actions.put(index, optionMenu);
+            index++;
+        }
+
+        this.scanner = scanner;
+    }
+
 
     public void afficher() {
 

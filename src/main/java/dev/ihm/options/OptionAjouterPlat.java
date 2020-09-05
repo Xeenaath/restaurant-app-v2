@@ -46,4 +46,9 @@ public class OptionAjouterPlat implements IOptionMenu {
         }
 
     }
+    
+    @Override
+    public int getPoids() {
+        return 102;
+    }
 }
